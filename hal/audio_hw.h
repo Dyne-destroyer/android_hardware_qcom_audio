@@ -21,7 +21,6 @@
 #define QCOM_AUDIO_HW_H
 
 #include <cutils/list.h>
-#include <hardware/audio_amplifier.h>
 #include <hardware/audio.h>
 #include <tinyalsa/asoundlib.h>
 #include <tinycompress/tinycompress.h>
@@ -311,7 +310,31 @@ struct audio_device {
      * or other capabilities are present for the device corresponding to that usecase.
      */
     struct pcm_params *use_case_table[AUDIO_USECASE_MAX];
-    amplifier_device_t *amp;
+    int (*offload_effects_set_hpx_state)(bool);
+
+    void *adm_data;
+    void *adm_lib;
+    adm_init_t adm_init;
+    adm_deinit_t adm_deinit;
+    adm_register_input_stream_t adm_register_input_stream;
+    adm_register_output_stream_t adm_register_output_stream;
+    adm_deregister_stream_t adm_deregister_stream;
+    adm_request_focus_t adm_request_focus;
+    adm_abandon_focus_t adm_abandon_focus;
+    adm_set_config_t adm_set_config;
+    adm_request_focus_v2_t adm_request_focus_v2;
+    adm_is_noirq_avail_t adm_is_noirq_avail;
+    adm_on_routing_change_t adm_on_routing_change;
+
+    void (*offload_effects_get_parameters)(struct str_parms *,
+                                           struct str_parms *);
+    void (*offload_effects_set_parameters)(struct str_parms *);
+
+    bool multi_offload_enable;
+    int perf_lock_handle;
+    int perf_lock_opts[MAX_PERF_LOCK_OPTS];
+    int perf_lock_opts_size;
+    bool native_playback_enabled;
 };
 
 int select_devices(struct audio_device *adev,

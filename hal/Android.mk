@@ -241,7 +241,6 @@ endif
 LOCAL_SHARED_LIBRARIES := \
 	liblog \
 	libcutils \
-	libhardware \
 	libtinyalsa \
 	libtinycompress \
 	libaudioroute \
@@ -253,7 +252,6 @@ LOCAL_C_INCLUDES += \
 	external/tinyalsa/include \
 	external/tinycompress/include \
 	external/expat/lib \
-	hardware/libhardware/include \
 	$(call include-path-for, audio-route) \
 	$(call include-path-for, audio-effects) \
 	$(LOCAL_PATH)/$(AUDIO_PLATFORM) \
@@ -285,6 +283,9 @@ ifeq ($(strip $(AUDIO_FEATURE_ENABLED_PM_SUPPORT)),true)
     LOCAL_C_INCLUDES += $(TARGET_OUT_HEADERS)/libperipheralclient/inc
     LOCAL_SHARED_LIBRARIES += libperipheral_client
 endif
+
+LOCAL_CFLAGS += -Wall -Werror
+LOCAL_CLANG_CFLAGS += -Wno-unused-variable -Wno-unused-function -Wno-missing-field-initializers
 
 LOCAL_COPY_HEADERS_TO   := mm-audio
 LOCAL_COPY_HEADERS      := audio_extn/audio_defs.h
