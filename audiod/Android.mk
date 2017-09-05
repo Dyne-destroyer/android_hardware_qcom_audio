@@ -9,10 +9,12 @@ LOCAL_SRC_FILES:= \
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 
 LOCAL_SHARED_LIBRARIES := \
+	libaudioclient \
 	libcutils \
 	libutils \
 	libbinder \
-	libmedia
+	libmedia \
+	liblog
 
 LOCAL_ADDITIONAL_DEPENDENCIES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
